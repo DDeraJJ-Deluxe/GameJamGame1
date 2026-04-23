@@ -21,9 +21,13 @@ public class PlayerAimController : MonoBehaviour
 
     private bool isAiming;
 
+    private CameraFollow camFollow;
+
+
     private void Awake()
     {
         input = new InputSystem_Actions();
+        camFollow = FindAnyObjectByType<CameraFollow>();
     }
 
     private void OnEnable()
@@ -49,11 +53,15 @@ public class PlayerAimController : MonoBehaviour
         Vector2 mouse = Mouse.current.position.ReadValue();
         smoothedMouse = mouse;
         aimAnchor = mouse;
+        
+        camFollow.SetAiming(true);
     }
 
     private void OnAimStopped(InputAction.CallbackContext ctx)
     {
         isAiming = false;
+
+        camFollow.SetAiming(false);
     }
 
     private void Update()
